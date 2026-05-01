@@ -1,6 +1,6 @@
 # Together
 
-A cross-platform emergency communication and safety app built for crisis scenarios — works fully offline, with no internet, no cell signal, and no infrastructure required.
+A cross-platform emergency communication and safety app built for crisis scenarios that works fully offline, with no internet, no cell signal, and no infrastructure required.
 
 Built for **Hardcore Entrepreneur Hackathon 6.0** 
 
@@ -19,11 +19,12 @@ Built for **Hardcore Entrepreneur Hackathon 6.0**
 - **SOS card** — blood type, allergies, medications, readable by first responders without authentication
 - **Emergency contacts** — AES-256-CBC encrypted, key stored only in device secure storage
 - **Safety map** — offline-first with bundled hospital, shelter, and police station data (OpenStreetMap)
-- **Community hazard pins** — user-reported, AI-validated, Firestore-synced with proximity notifications
+- **Community hazard pins** — user-reported, Firestore-synced with proximity notifications
 - **AI assistant** — two-tier: Gemini 2.5 Flash (primary) → HuggingFace fine-tuned Gemma (fallback)
 - **Voice call mode** — hands-free STT input, TTS output, surroundings camera mode
 - **P2P mesh** — Wi-Fi Direct messaging and SOS broadcast with zero internet
-- **Community feed** — live Firestore posts (jobs, courses, events, tips) with offline fallback
+- **P2P mesh video demo** - [Google Drive](https://drive.google.com/file/d/1wSnTNEMmwYzkSmiF8qQNhWrX0S-IH5ej/view?usp=drive_link) 
+- **Community feed** — live Firestore posts (jobs, courses, events, tips) 
 - **Accessibility** — AMOLED pure-black theme, high-contrast mode, large text (1.3×), voice guidance
 
 ---
@@ -44,7 +45,7 @@ Built for **Hardcore Entrepreneur Hackathon 6.0**
 ### AI
 
 - Google Gemini 2.5 Flash — streaming chat, image understanding, safety-guide context
-- HuggingFace Inference API — fine-tuned Gemma fallback (`minico72/together-ai-gemma`)
+- HuggingFace Inference API — fine-tuned Gemma fallback [minico72/together-ai-gemma](https://huggingface.co/minico72/together-ai-gemma)
 
 ### Offline & P2P
 
