@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base href="$FLUTTER_BASE_HREF">
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="Together — accessible safety companion">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Together">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+  <link rel="icon" type="image/png" href="favicon.png"/>
+  <title>Together</title>
+  <link rel="manifest" href="manifest.json">
+
+  <!-- flutter_gemma Cache API interop (required for model download/caching on web) -->
+  <script>
+    async function cacheHas(cacheName, url) {
+      try { const c = await caches.open(cacheName); return (await c.match(url)) !== undefined; }
+      catch (e) { return false; }
+    }
+    async function cacheGetBlobUrl(cacheName, url) {
+      try {
+        const c = await caches.open(cacheName);
+        const r = await c.match(url);
+        if (!r) return null;
+        return URL.createObjectURL(await r.blob());
+      } catch (e) { return null; }
+    }
+    async function cachePut(cacheName, url, data) {
+      const c = await caches.open(cacheName);
+      await c.put(url, new Response(data, { headers: { 'Content-Type': 'application/octet-stream' } }));
+    }
+    async function cacheDelete(cacheName, url) {
+      try { const c = await caches.open(cacheName); return await c.delete(url); }
+      catch (e) { return false; }
+    }
+    async function cacheDeleteCache(cacheName) {
+      try { return await caches.delete(cacheName); } catch (e) { return false; }
+    }
+    async function cacheGetAllKeys(cacheName) {
+      try { const c = await caches.open(cacheName); return (await c.keys()).map(r => r.url); }
+      catch (e) { return []; }
+    }
+    async function storageRequestPersistent() {
+      try { return navigator.storage?.persist ? await navigator.storage.persist() : false; }
+      catch (e) { return false; }
+    }
+    async function storageGetQuota() {
+      try {
+        if (navigator.storage?.estimate) {
+          const e = await navigator.storage.estimate();
+          return { usage: e.usage || 0, quota: e.quota || 0 };
+        }
+      } catch (e) {}
+      return { usage: 0, quota: 0 };
+    }
+    function blobUrlRevoke(u) { try { URL.revokeObjectURL(u); } catch (e) {} }
+    function createBlob(data) { return new Blob([data], { type: 'application/octet-stream' }); }
+  </script>
+
+  <!--
+    MediaPipe GenAI bootstrap (exact pattern from flutter_gemma official docs).
+    Static import guarantees the module is resolved before this script block exits.
+    Flutter is injected AFTER so window.FilesetResolver is always set first.
+  -->
+  <script type="module">
+    try {
+      // Official URL from flutter_gemma docs — package root, not bundle file.
+      const { FilesetResolver, LlmInference } =
+        await import('https://cdn.jsdelivr.net/npm/@mediapipe/tasks-genai@0.10.27');
+      window.FilesetResolver = FilesetResolver;
+      window.LlmInference    = LlmInference;
+      console.log('[Together] MediaPipe ready ✓', typeof FilesetResolver);
+    } catch (e) {
+      console.error('[Together] MediaPipe load failed:', e.message);
+      // Try bundle file as fallback
+      try {
+        const { FilesetResolver, LlmInference } =
+          await import('https://cdn.jsdelivr.net/npm/@mediapipe/tasks-genai@0.10.27/genai_bundle.mjs');
+        window.FilesetResolver = FilesetResolver;
+        window.LlmInference    = LlmInference;
+        console.log('[Together] MediaPipe ready via bundle fallback ✓');
+      } catch (e2) {
+        console.error('[Together] Both MediaPipe URLs failed. AI disabled.', e2.message);
+      }
+    }
+
+    // Start Flutter — MediaPipe is settled (loaded or failed) before this runs.
+    const s = document.createElement('script');
+    s.src = 'flutter_bootstrap.js';
+    document.body.appendChild(s);
+  </script>
+</head>
+<body>
+  <script src='https://cdn.jsdelivr.net/npm/pdfjs-dist@4.6.82/build/pdf.min.mjs' type='module'></script>
+  <script type='module'>
+  var { pdfjsLib } = globalThis;
+  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@4.6.82/build/pdf.worker.mjs';
+
+  var pdfRenderOptions = {
+    cMapUrl: 'https://cdn.jsdelivr.net/npm/pdfjs-dist@4.6.82/cmaps/',
+    cMapPacked: true,
+  }
+  </script>
+  <!-- flutter_bootstrap.js injected above after MediaPipe settles -->
+</body>
+</html>
