@@ -11,7 +11,7 @@ Built for **Hardcore Entrepreneur Hackathon 6.0**
 - **Demo video**: [youtu.be/YXzLZYoKN9Q](https://youtu.be/YXzLZYoKN9Q)
 - **Pitch video**: [youtu.be/ei3Sa_hmpWo](https://youtu.be/ei3Sa_hmpWo)
 - **APK**: [Google Drive](https://drive.google.com/file/d/11Cqxz6he8wrqUGDwmQQNAWGp1em9OJw7/view?usp=drive_link)
-
+-**Business-plan_HE-6.0**: [Google Drive](https://docs.google.com/presentation/d/1FO4o9vUIbzRGjnq5Snft6NjMtmF7IcQ8/edit?usp=drive_link&ouid=117266893885648406598&rtpof=true&sd=true)
 ---
 
 ## Features
